@@ -1,15 +1,4 @@
-#pragma once
-
-#include "raylib.h"
-#include "UI.hpp"
-
-class Renderer
-{
-public:
-    static void RenderText( const Text& text );
-    static void RenderRect( const Rect& panel );
-    static void RenderButton( const Button& button );
-};
+#include "Renderer.h"
 
 void Renderer::RenderText( const Text& text )
 {
