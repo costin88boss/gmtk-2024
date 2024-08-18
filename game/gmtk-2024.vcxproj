@@ -281,8 +281,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\Grid.h" />
+    <ClInclude Include="src\LoadSaveTXT.hpp" />
+    <ClInclude Include="src\Object.hpp" />
+    <ClInclude Include="src\Renderer.hpp" />
+    <ClInclude Include="src\Scene.hpp" />
     <ClInclude Include="src\Tile.h" />
+    <ClInclude Include="src\UI.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
