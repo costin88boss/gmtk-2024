@@ -2,22 +2,34 @@
 
 #include <fstream>
 #include <string>
+#include "UI.hpp"
 
 std::string LoadStringFromFile( const std::string& filePath );
 void SaveStringToFile( const std::string& string, const std::string& filePath );
+
 Text LoadTextDataFromFile( const std::string& filePath );
 Text LoadTextDataFromString( const std::string& string );
+Rect LoadRectDataFromFile( const std::string& filePath );
+Rect LoadRectDataFromString( const std::string& string );
+Button LoadButtonDataFromFile( const std::string& filePath );
+Button LoadButtonDataFromString( const std::string& string );
+
 std::string ParseStringForTag( const std::string& string, const std::string& tag );
 
 std::string LoadStringFromFile( const std::string& filePath )
 {
     std::ifstream file( filePath );
-    std::string string;
-    while ( getline( file, string ) ) {}
+    std::string buffer;
+    std::string out;
+    while ( getline( file, buffer ) )
+    {
+        out += buffer;
+        out += '\n';
+    }
 
     file.close();
     
-    return string;
+    return out;
 }
 
 void SaveStringToFile( const std::string& string, const std::string& filePath )
@@ -45,28 +57,97 @@ Text LoadTextDataFromString( const std::string& string )
     int outSize;
     Color outColor;
 
-    std::string textStr = ParseStringForTag( string, "text" );
-    std::string posXStr = ParseStringForTag( string, "posX" );
-    std::string posYStr = ParseStringForTag( string, "posY" );
-    std::string sizeStr = ParseStringForTag( string, "size" );
-    std::string colorRStr = ParseStringForTag( string, "colorR" );
-    std::string colorGStr = ParseStringForTag( string, "colorG" );
-    std::string colorBStr = ParseStringForTag( string, "colorB" );
-    std::string colorAStr = ParseStringForTag( string, "colorA" );
+    outText = ParseStringForTag( string, "text" );
 
-    outText = textStr;
+    outPos.x = std::stof( ParseStringForTag( string, "posX" ) );
+    outPos.y = std::stof( ParseStringForTag( string, "posY" ) );
 
-    outPos.x = std::stof( posXStr );
-    outPos.y = std::stof( posYStr );
+    outSize = std::stoi( ParseStringForTag( string, "size" ));
 
-    outSize = std::stoi( sizeStr );
-
-    outColor.r = std::stoi( colorRStr );
-    outColor.g = std::stoi( colorGStr );
-    outColor.b = std::stoi( colorBStr );
-    outColor.a = std::stoi( colorAStr );
+    outColor.r = std::stoi( ParseStringForTag( string, "colorR" ) );
+    outColor.g = std::stoi( ParseStringForTag( string, "colorG" ) );
+    outColor.b = std::stoi( ParseStringForTag( string, "colorB" ) );
+    outColor.a = std::stoi( ParseStringForTag( string, "colorA" ) );
 
     Text out( outPos, outText, outSize, outColor );
+
+    return out;
+}
+
+Rect LoadRectDataFromFile( const std::string& filePath )
+{
+    std::string data = LoadStringFromFile( filePath );
+    Rect rect = LoadRectDataFromString( data );
+
+    return rect;
+}
+
+Rect LoadRectDataFromString( const std::string& string )
+{
+    Vector2 outPos;
+    Vector2 outSize;
+    Color outColor;
+
+    outPos.x = std::stof( ParseStringForTag( string, "posX" ) );
+    outPos.y = std::stof( ParseStringForTag( string, "posY" ) );
+
+    outSize.x = std::stof( ParseStringForTag( string, "sizeX" ) );
+    outSize.y = std::stof( ParseStringForTag( string, "sizeY" ) );
+
+    outColor.r = std::stoi( ParseStringForTag( string, "colorR" ) );
+    outColor.g = std::stoi( ParseStringForTag( string, "colorG" ) );
+    outColor.b = std::stoi( ParseStringForTag( string, "colorB" ) );
+    outColor.a = std::stoi( ParseStringForTag( string, "colorA" ) );
+
+    Rect out( outPos, outSize, outColor );
+
+    return out;
+}
+
+Button LoadButtonDataFromFile( const std::string& filePath )
+{
+    std::string data = LoadStringFromFile( filePath );
+    Button button = LoadButtonDataFromString( data );
+
+    return button;
+}
+
+Button LoadButtonDataFromString( const std::string& string )
+{
+    Vector2 outPos;
+    Vector2 outSize;
+    Color outColor;
+
+    std::string outText;
+    Vector2 outTextPos;
+    int outTextSize;
+    Color outTextColor;
+
+    outPos.x = std::stof( ParseStringForTag( string, "posX" ) );
+    outPos.y = std::stof( ParseStringForTag( string, "posY" ) );
+
+    outSize.x = std::stof( ParseStringForTag( string, "sizeX" ) );
+    outSize.y = std::stof( ParseStringForTag( string, "sizeY" ) );
+
+    outColor.r = std::stoi( ParseStringForTag( string, "colorR" ) );
+    outColor.g = std::stoi( ParseStringForTag( string, "colorG" ) );
+    outColor.b = std::stoi( ParseStringForTag( string, "colorB" ) );
+    outColor.a = std::stoi( ParseStringForTag( string, "colorA" ) );
+
+
+    outText = ParseStringForTag( string, "text" );
+
+    outTextPos.x = std::stof( ParseStringForTag( string, "textPosX" ) );
+    outTextPos.y = std::stof( ParseStringForTag( string, "textPosY" ) );
+
+    outTextSize = std::stoi( ParseStringForTag( string, "textSize" ));
+
+    outTextColor.r = std::stoi( ParseStringForTag( string, "textColorR" ) );
+    outTextColor.g = std::stoi( ParseStringForTag( string, "textColorG" ) );
+    outTextColor.b = std::stoi( ParseStringForTag( string, "textColorB" ) );
+    outTextColor.a = std::stoi( ParseStringForTag( string, "textColorA" ) );
+
+    Button out( outPos, outTextPos, outSize, outTextSize, outColor, outTextColor, outText );
 
     return out;
 }

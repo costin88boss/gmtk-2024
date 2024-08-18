@@ -1,41 +1,35 @@
 #include <iostream>
 #include "raylib.h"
-#include "text.hpp"
+#include "UI.hpp"
 #include "loadsavetxt.hpp"
+#include "Renderer.hpp"
 
-int main(void)
+int main()
 {
-    SetConfigFlags(FLAG_VSYNC_HINT);
-    InitWindow(800, 600, "Game");
-
+    SetConfigFlags( FLAG_VSYNC_HINT );
+    InitWindow( 960, 600, "Game" );
     InitAudioDevice();
 
-    // Text( { 220, 270 }, "HELLO, WORLD!", 50, WHITE );
-    std::string data = "text:HELLO, WORLD!\n"
-                       "posX:220.0\n"
-                       "posY:270.0\n"
-                       "size:50\n"
-                       "colorR:255\n"
-                       "colorG:255\n"
-                       "colorB:255\n"
-                       "colorA:255\n";
-    
-    Text title = LoadTextDataFromString(data);
+    Rect rect = LoadRectDataFromFile( "resources/scenes/titleScreen/panel.txt" );
+    Text title = LoadTextDataFromFile( "resources/scenes/titleScreen/title.txt" );
+    Button button = LoadButtonDataFromFile( "resources/scenes/titleScreen/playButton.txt" );
 
-    while (!WindowShouldClose())
+    while ( !WindowShouldClose() )
     {
-        ClearBackground(RED);
+        ClearBackground( DARKBLUE );
 
         BeginDrawing();
 
-        DrawFPS(0, 0);
-        DrawRectangleGradientV( 300, 200, 200, 200, BLUE, GREEN);
+        DrawFPS( 0, 0 );
 
-        DrawText( title.text.c_str(),
-                  title.position.x,
-                  title.position.y, 
-                  title.size, 
-                  title.color );
+        Renderer::RenderRect( rect );
+        Renderer::RenderText( title );
+        Renderer::RenderButton( button );
+
+        if ( button.IsClicked() )
+        {
+            std::cout << "Button is clicked!\n"; 
+        }
 
         EndDrawing();
     }
