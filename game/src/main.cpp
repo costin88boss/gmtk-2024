@@ -10,14 +10,12 @@ int main()
 {
     Game game( 960, 600, "Game" );
 
-    InitAudioDevice();
-
-    
-
     while (!WindowShouldClose())
     {
         ClearBackground(RED);
 
+
+        Renderer::RenderText()
 
         BeginDrawing();
 

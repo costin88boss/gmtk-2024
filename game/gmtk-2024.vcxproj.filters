@@ -9,19 +9,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Grid.cpp" />
+    <ClCompile Include="src\LoadSaveTXT.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Grid.h" />
+    <ClInclude Include="src\LoadSaveTXT.h" />
+    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Tile.h" />
-    <ClInclude Include="src\Game.hpp" />
-    <ClInclude Include="src\LoadSaveTXT.hpp" />
-    <ClInclude Include="src\Object.hpp" />
-    <ClInclude Include="src\Renderer.hpp" />
-    <ClInclude Include="src\Scene.hpp" />
-    <ClInclude Include="src\UI.hpp" />
+    <ClInclude Include="src\UI.h" />
   </ItemGroup>
 </Project>

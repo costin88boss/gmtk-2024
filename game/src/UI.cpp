@@ -1,6 +1,6 @@
 #include "UI.h"
 
-Text::Text( Vector2 position, std::string text, u_int size, Color color )
+Text::Text( Vector2 position, std::string text, size_t size, Color color )
     :
     Object( position ),
     text( text ),

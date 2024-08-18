@@ -8,10 +8,10 @@ class Text : public Object
 {
 public:
     std::string text;
-    u_int size;
+    size_t size;
     Color color;
 
-    Text( Vector2 position, std::string text, u_int size, Color color );
+    Text( Vector2 position, std::string text, size_t size, Color color );
 };
 
 class Button : public Rect
@@ -19,7 +19,7 @@ class Button : public Rect
 public:
     std::string text;
     Vector2 textPosition;
-    u_int textSize;
+    int textSize;
     Color textColor;
 
     Button( Vector2 buttonPos,  Vector2 textPos,
