@@ -2,41 +2,22 @@
 
 #include <string>
 #include "raylib.h"
+#include "Object.hpp"
 
-class Text
+class Text : public Object
 {
 public:
     std::string text;
-    Vector2 position;
     u_int size;
     Color color;
 
     Text( Vector2 position, std::string text, u_int size, Color color );
-    std::string GetData();
-    static Text LoadData( std::string& data );
 };
 
 Text::Text( Vector2 position, std::string text, u_int size, Color color )
     :
-    position( position ),
+    Object( position, TextType ),
     text( text ),
-    size( size ),
-    color( color )
-{}
-
-class Rect
-{
-public:
-    Vector2 position;
-    Vector2 size;
-    Color color;
-
-    Rect( Vector2 position, Vector2 size, Color color );
-};
-
-Rect::Rect( Vector2 position, Vector2 size, Color color )
-    :
-    position( position ),
     size( size ),
     color( color )
 {}
@@ -62,7 +43,7 @@ Button::Button( Vector2 buttonPos,  Vector2 textPos,
             Color buttonColor,  Color textColor, 
             std::string text )
             :
-            Rect( buttonPos, buttonSize, buttonColor ),
+            Rect( buttonPos, buttonSize, buttonColor, ButtonType ),
             text( text ),
             textPosition( textPos ),
             textSize( textSize ),

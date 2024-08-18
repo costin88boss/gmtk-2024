@@ -7,12 +7,12 @@
 std::string LoadStringFromFile( const std::string& filePath );
 void SaveStringToFile( const std::string& string, const std::string& filePath );
 
-Text LoadTextDataFromFile( const std::string& filePath );
-Text LoadTextDataFromString( const std::string& string );
-Rect LoadRectDataFromFile( const std::string& filePath );
-Rect LoadRectDataFromString( const std::string& string );
-Button LoadButtonDataFromFile( const std::string& filePath );
-Button LoadButtonDataFromString( const std::string& string );
+Text LoadTextData( const std::string& filePath );
+Text ReadTextData( const std::string& string );
+Rect LoadRect( const std::string& filePath );
+Rect ReadRectData( const std::string& string );
+Button LoadButtonData( const std::string& filePath );
+Button ReadButtonData( const std::string& string );
 
 std::string ParseStringForTag( const std::string& string, const std::string& tag );
 
@@ -42,15 +42,15 @@ void SaveStringToFile( const std::string& string, const std::string& filePath )
     file.close();
 }
 
-Text LoadTextDataFromFile( const std::string& filePath )
+Text LoadTextData( const std::string& filePath )
 {
     std::string data = LoadStringFromFile( filePath );
-    Text text = LoadTextDataFromString( data );
+    Text text = ReadTextData( data );
 
     return text;
 }
 
-Text LoadTextDataFromString( const std::string& string )
+Text ReadTextData( const std::string& string )
 {
     std::string outText;
     Vector2 outPos;
@@ -74,15 +74,15 @@ Text LoadTextDataFromString( const std::string& string )
     return out;
 }
 
-Rect LoadRectDataFromFile( const std::string& filePath )
+Rect LoadRectData( const std::string& filePath )
 {
     std::string data = LoadStringFromFile( filePath );
-    Rect rect = LoadRectDataFromString( data );
+    Rect rect = ReadRectData( data );
 
     return rect;
 }
 
-Rect LoadRectDataFromString( const std::string& string )
+Rect ReadRectData( const std::string& string )
 {
     Vector2 outPos;
     Vector2 outSize;
@@ -104,15 +104,15 @@ Rect LoadRectDataFromString( const std::string& string )
     return out;
 }
 
-Button LoadButtonDataFromFile( const std::string& filePath )
+Button LoadButtonData( const std::string& filePath )
 {
     std::string data = LoadStringFromFile( filePath );
-    Button button = LoadButtonDataFromString( data );
+    Button button = ReadButtonData( data );
 
     return button;
 }
 
-Button LoadButtonDataFromString( const std::string& string )
+Button ReadButtonData( const std::string& string )
 {
     Vector2 outPos;
     Vector2 outSize;
