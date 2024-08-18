@@ -1,4 +1,6 @@
 #include "raylib.h"
+#include "Grid.h"
+#include <mdspan>
 
 int main(void)
 {
@@ -7,7 +9,14 @@ int main(void)
 
     InitAudioDevice();
 
-    
+    int i = 0;
+    std::vector<Tile> asd =
+    { 
+        Tile {++i},
+    };
+
+
+    Grid::SetGrid(&asd, 6);
 
     while (!WindowShouldClose())
     {
@@ -18,7 +27,7 @@ int main(void)
 
         DrawFPS(0, 0);
 
-        DrawRectangleGradientV(200, 200, 200, 200, BLUE, GREEN);
+        Grid::DrawBackground();
 
         EndDrawing();
     }
