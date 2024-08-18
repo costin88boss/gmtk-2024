@@ -1,8 +1,0 @@
-posX:230.0
-posY:0.0
-sizeX:500.0
-sizeY:600.0
-colorR:0
-colorG:0
-colorB:0
-colorA:120
