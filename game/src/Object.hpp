@@ -2,21 +2,17 @@
 
 #include "raylib.h"
 
-enum ObjectType { EmptyType, RectType, TextType, ButtonType };
-
 class Object
 {
 public:
     Vector2 position;
-    ObjectType type;
     
-    Object( Vector2 position, ObjectType type );
+    Object( Vector2 position );
 };
 
-Object::Object( Vector2 position, ObjectType type ) 
+Object::Object( Vector2 position ) 
     : 
-    position( position ),
-    type( type )
+    position( position )
 {}
 
 class Rect : public Object
@@ -26,18 +22,11 @@ public:
     Color color;
 
     Rect( Vector2 position, Vector2 size, Color color );
-    Rect( Vector2 position, Vector2 size, Color color, ObjectType type );
 };
 
 Rect::Rect( Vector2 position, Vector2 size, Color color )
     :
-    Object( position, RectType ),
-    size( size ),
-    color( color )
-{}
-Rect::Rect( Vector2 position, Vector2 size, Color color, ObjectType type )
-    :
-    Object( position, type ),
+    Object( position ),
     size( size ),
     color( color )
 {}

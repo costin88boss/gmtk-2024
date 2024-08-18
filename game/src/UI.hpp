@@ -16,7 +16,7 @@ public:
 
 Text::Text( Vector2 position, std::string text, u_int size, Color color )
     :
-    Object( position, TextType ),
+    Object( position ),
     text( text ),
     size( size ),
     color( color )
@@ -43,7 +43,7 @@ Button::Button( Vector2 buttonPos,  Vector2 textPos,
             Color buttonColor,  Color textColor, 
             std::string text )
             :
-            Rect( buttonPos, buttonSize, buttonColor, ButtonType ),
+            Rect( buttonPos, buttonSize, buttonColor ),
             text( text ),
             textPosition( textPos ),
             textSize( textSize ),
