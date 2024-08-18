@@ -1,0 +1,16 @@
+posX:280.0
+posY:240.0
+sizeX:400.0
+sizeY:50.0
+colorR:0
+colorG:0
+colorB:0
+colorA:120
+text:Play
+textPosX:445.0
+textPosY:250.0
+textSize:34
+textColorR:255
+textColorG:255
+textColorB:255
+textColorA:255

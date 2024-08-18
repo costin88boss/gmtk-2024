@@ -1,22 +1,18 @@
+#include <iostream>
 #include "raylib.h"
-#include "Grid.h"
-#include <mdspan>
+#include "Game.hpp"
+#include "UI.hpp"
+#include "LoadSaveTXT.hpp"
+#include "Renderer.hpp"
+#include "Scene.hpp"
 
-int main(void)
+int main()
 {
-    SetConfigFlags(FLAG_VSYNC_HINT);
-    InitWindow(800, 600, "Game");
+    Game game( 960, 600, "Game" );
 
     InitAudioDevice();
 
-    int i = 0;
-    std::vector<Tile> asd =
-    { 
-        Tile {++i},
-    };
-
-
-    Grid::SetGrid(&asd, 6);
+    
 
     while (!WindowShouldClose())
     {
@@ -27,13 +23,8 @@ int main(void)
 
         DrawFPS(0, 0);
 
-        Grid::DrawBackground();
+        DrawRectangleGradientV(200, 200, 200, 200, BLUE, GREEN);
 
         EndDrawing();
     }
-
-    CloseAudioDevice();
-    CloseWindow();
-
-    return 0;
 }
