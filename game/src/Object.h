@@ -10,11 +10,6 @@ public:
     Object( Vector2 position );
 };
 
-Object::Object( Vector2 position ) 
-    : 
-    position( position )
-{}
-
 class Rect : public Object
 {
 public:
@@ -23,10 +18,3 @@ public:
 
     Rect( Vector2 position, Vector2 size, Color color );
 };
-
-Rect::Rect( Vector2 position, Vector2 size, Color color )
-    :
-    Object( position ),
-    size( size ),
-    color( color )
-{}

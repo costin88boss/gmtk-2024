@@ -1,10 +1,10 @@
 #include <iostream>
 #include "raylib.h"
-#include "Game.hpp"
-#include "UI.hpp"
-#include "LoadSaveTXT.hpp"
-#include "Renderer.hpp"
-#include "Scene.hpp"
+#include "Game.h"
+#include "UI.h"
+#include "LoadSaveTXT.h"
+#include "Renderer.h"
+#include "Scene.h"
 
 int main()
 {
