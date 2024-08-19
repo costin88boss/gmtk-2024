@@ -9,23 +9,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Button.cpp" />
+    <ClCompile Include="src\SceneManage.cpp" />
+    <ClCompile Include="src\Entities\Movable.cpp" />
+    <ClCompile Include="src\Entities\Plate.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Grid.cpp" />
-    <ClCompile Include="src\LoadSaveTXT.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Tile.h" />
+    <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\SceneManage.h" />
+    <ClInclude Include="src\Entities\Gate.h" />
+    <ClInclude Include="src\Entities\Movable.h" />
+    <ClInclude Include="src\Entities\Plate.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Grid.h" />
-    <ClInclude Include="src\LoadSaveTXT.h" />
-    <ClInclude Include="src\Object.h" />
-    <ClInclude Include="src\Renderer.h" />
-    <ClInclude Include="src\Scene.h" />
-    <ClInclude Include="src\Tile.h" />
-    <ClInclude Include="src\UI.h" />
   </ItemGroup>
 </Project>

@@ -14,9 +14,9 @@ public:
 
     Button( Vector2 position, Vector2 size, Color color, std::string text, void (*onClickEvent)() );
 
-    bool IsHovered();
-    void CheckForInput();
-    void Draw();
+    bool IsHovered() const;
+    void CheckForInput() const;
+    void Draw() const;
 };
 
 Vector2 CenterRectPos( Vector2 position, Vector2 size );
