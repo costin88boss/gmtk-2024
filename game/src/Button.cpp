@@ -31,7 +31,7 @@ void Button::Draw() const
     }
     DrawText( text.c_str(), static_cast<int>(GetCenteredTextPos( position, size, text ).x),
                             static_cast<int>(GetCenteredTextPos( position, size, text ).y),
-        static_cast<int>(size.y / 1.2), WHITE );
+        static_cast<int>(size.y), WHITE );
 }
 
 void Button::CheckForInput() const

@@ -17,6 +17,7 @@ void LevelLoader::LoadLvlAndSetGrid(const char* fileName)
 	//Grid::SetGrid();
 
 	auto p = Color(0, 0, 0);
+	// Could be auto p = (Color){0,0,0,0};
 
 	for (int x = 0; x < img.width; x++)
 	{

@@ -7,5 +7,5 @@ Vector2 GetCenteredRectPos( Vector2 position, Vector2 size )
 
 Vector2 GetCenteredTextPos( Vector2 position, Vector2 size, std::string text )
 {
-    return { position.x - text.length() * size.x / 36, position.y - size.y / 2.5f };
+    return { position.x - MeasureText( text.c_str(), size.y ) / 2, position.y - size.y / 2.25f };
 }
