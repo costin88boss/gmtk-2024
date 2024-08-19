@@ -16,13 +16,6 @@ bool Button::IsHovered()
              GetMouseY() > pos.y && GetMouseY() < pos.y + size.y );
 }
 
-bool Button::IsHovered()
-{
-    Vector2 pos = CenterRectPos( position, size );
-    return ( GetMouseX() > pos.x && GetMouseX() < pos.x + size.x &&
-             GetMouseY() > pos.y && GetMouseY() < pos.y + size.y );
-}
-
 void Button::Draw()
 {
     if ( IsHovered() )
@@ -44,10 +37,7 @@ void Button::Draw()
 void Button::CheckForInput()
 {
     if ( IsHovered() && IsMouseButtonPressed( 0 ) )
-    if ( IsHovered() && IsMouseButtonPressed( 0 ) )
     {
-        PlaySound( LoadSound( "resources/sfx/select.wav" ) );
-        this->onClickEvent();
         PlaySound( LoadSound( "resources/sfx/select.wav" ) );
         this->onClickEvent();
     }
@@ -59,8 +49,6 @@ Vector2 CenterRectPos( Vector2 position, Vector2 size )
 }
 
 Vector2 CenterTextPos( Vector2 position, Vector2 size, std::string text )
-Vector2 CenterTextPos( Vector2 position, Vector2 size, std::string text )
 {
-    return { position.x - text.length() * size.x / 36, position.y - size.y / 2.5f };
     return { position.x - text.length() * size.x / 36, position.y - size.y / 2.5f };
 }
