@@ -1,17 +1,14 @@
 #include "SceneManage.h"
+#include "Button.h"
 
 Scene SceneManage::m_currentScene = TITLE_SCREEN;
 
 // Title Screen Variables
-Button playButton( { 480, 300 },
-                   { 400, 50 },
-                   ( Color ){ 0, 0, 20, 160 },
-                   "Start",
-                   [](){ SceneManage::ChangeScene( GAMEPLAY ); } );
+Button playButton( { 480, 300 }, { 200, 50 }, WHITE, "Play", &SceneManage::GoToNextScene );
 
-void SceneManage::ChangeScene( Scene scene )
+void SceneManage::GoToNextScene()
 {
-    SceneManage::m_currentScene = scene;
+    SceneManage::m_currentScene = ( Scene )( m_currentScene + 1 );
 }
 
 void SceneManage::Update()
@@ -21,8 +18,8 @@ void SceneManage::Update()
         case TITLE_SCREEN:
             TitleScreen();
             break;
-        case GAMEPLAY:
-            Gameplay();
+        case LEVEL1:
+            Level1();
             break;
     }
 }
@@ -38,11 +35,10 @@ void TitleScreen()
     EndDrawing();
 }
 
-void Gameplay()
+void Level1()
 {
     BeginDrawing();
     ClearBackground( DARKPURPLE );
-    DrawRectangleV( { 50, 50 }, { 860, 500 }, ( Color ){ 0, 0, 0, 140 } );
-    DrawText( "Gameplay", 340, 270, 60, WHITE );
+    DrawText( "Level 1", 380, 270, 60, WHITE );
     EndDrawing();
 }
