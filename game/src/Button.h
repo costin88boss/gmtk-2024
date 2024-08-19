@@ -2,6 +2,7 @@
 
 #include <string>
 #include <raylib.h>
+#include "SceneManage.h"
 
 class Button
 {
@@ -14,10 +15,9 @@ public:
 
     Button( Vector2 position, Vector2 size, Color color, std::string text, void (*onClickEvent)() );
 
-    bool IsHovered();
     void CheckForInput();
     void Draw();
 };
 
 Vector2 CenterRectPos( Vector2 position, Vector2 size );
-Vector2 CenterTextPos( Vector2 position, Vector2 size, std::string text );
+Vector2 CenterTextPos( Vector2 position, Vector2 size );
