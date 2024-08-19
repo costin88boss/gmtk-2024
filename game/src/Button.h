@@ -2,6 +2,7 @@
 
 #include <string>
 #include <raylib.h>
+#include "Utils.h"
 
 class Button
 {
@@ -18,6 +19,3 @@ public:
     void CheckForInput() const;
     void Draw() const;
 };
-
-Vector2 CenterRectPos( Vector2 position, Vector2 size );
-Vector2 CenterTextPos( Vector2 position, Vector2 size, std::string text );
