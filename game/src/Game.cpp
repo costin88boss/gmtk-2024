@@ -9,7 +9,7 @@ Game::Game( const size_t width, const size_t height, const std::string& title )
     this->title = title;
 
     SetConfigFlags( FLAG_VSYNC_HINT );
-    InitWindow( width, height, title.c_str() );
+    InitWindow(static_cast<int>(width), static_cast<int>(height), title.c_str() );
     InitAudioDevice();
 }
 

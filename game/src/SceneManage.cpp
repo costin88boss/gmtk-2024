@@ -1,4 +1,5 @@
 #include "SceneManage.h"
+#include "LevelLoader.h"
 
 Scene SceneManage::m_currentScene = TITLE_SCREEN;
 
@@ -12,6 +13,7 @@ Button playButton( { 480, 300 },
 void SceneManage::ChangeScene( Scene scene )
 {
     SceneManage::m_currentScene = scene;
+    LevelLoader::LoadLvlAndSetGrid("resources/lvls/test.png");
 }
 
 void SceneManage::Update()

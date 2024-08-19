@@ -16,6 +16,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\LevelLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Tile.h" />
@@ -26,5 +27,6 @@
     <ClInclude Include="src\Entities\Plate.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Grid.h" />
+    <ClInclude Include="src\LevelLoader.h" />
   </ItemGroup>
 </Project>
