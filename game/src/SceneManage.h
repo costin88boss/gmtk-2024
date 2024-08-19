@@ -1,19 +1,19 @@
 #pragma once
 
-#include <stddef.h>
 #include <vector>
 #include <raylib.h>
+#include "Button.h"
 
-enum Scene { TITLE_SCREEN, LEVEL1 };
+enum Scene { TITLE_SCREEN, GAMEPLAY };
 
 class SceneManage
 {
 public:
-    static void GoToNextScene();
+    static void ChangeScene( Scene scene );
     static void Update();
 private:
     static Scene m_currentScene;
 };
 
 void TitleScreen();
-void Level1();
+void Gameplay();
