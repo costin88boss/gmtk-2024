@@ -1,0 +1,30 @@
+#pragma once
+
+#include <vector>
+#include <string>
+#include <stddef.h>
+#include "Game.h"
+#include "Tile.h"
+#include "Object.h"
+
+class Level
+{
+public:
+    Level( size_t width, size_t height, std::vector<Object*> objects );
+
+    void Update();
+private:
+    size_t m_width, m_height;
+    std::vector<Tile> m_tiles;
+    std::vector<Object*> m_objects;
+
+    void DrawTiles();
+    void DrawObjects();
+    void DrawTile( Tile tile, int x, int y );
+    void DrawObject( Object* obj );
+
+    void UpdatePlayer( Player* player );
+
+    bool CheckForWallCollision( int x, int y, size_t size );
+    bool HandleBoxCollision( int x, int y, int moveX, int moveY, size_t size );
+};

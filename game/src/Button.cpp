@@ -22,7 +22,7 @@ void Button::Draw() const
     {
         DrawRectangleV( GetCenteredRectPos( { position.x - 5, position.y - 5 }, size ),
                                        { size.x + 10, size.y + 10 }, 
-                                       Color { 200, 200, 255, 40 }             );
+                                       Color { 255, 255, 255, 60 } );
         DrawRectangleV( GetCenteredRectPos( position, size ), size, color );
     }
     else
