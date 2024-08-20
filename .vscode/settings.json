@@ -54,7 +54,19 @@
 		"stdexcept": "cpp",
 		"streambuf": "cpp",
 		"cinttypes": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"condition_variable": "cpp",
+		"cstring": "cpp",
+		"ctime": "cpp",
+		"list": "cpp",
+		"map": "cpp",
+		"set": "cpp",
+		"ratio": "cpp",
+		"mutex": "cpp",
+		"semaphore": "cpp",
+		"stop_token": "cpp",
+		"thread": "cpp",
+		"*.m": "cpp"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }

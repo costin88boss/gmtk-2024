@@ -12,7 +12,7 @@ public:
     size_t size;
 
     Object( int x, int y, size_t size );
-    void Move( int x, int y );
+    virtual void Move( int x, int y );
     virtual Texture2D GetSprite() = 0;
 };
 
@@ -30,4 +30,25 @@ public:
 
     Player( int x, int y, size_t size, size_t resizes );
     Texture2D GetSprite();
+    void Move( int x, int y ) override;
+};
+
+class Gate : public Object
+{
+public:
+    bool isOpen;
+
+    Gate( int x, int y, size_t size );
+    Texture2D GetSprite();
+};
+
+class Plate : public Object
+{
+public:
+    Gate* gate;
+
+    Plate( int x, int y, size_t size, Gate* gate );
+    Texture2D GetSprite();
+
+    void UpdatePlate( Object* obj );
 };

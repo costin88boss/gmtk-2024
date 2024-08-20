@@ -12,6 +12,7 @@ public:
     size_t width, height;
     static std::unordered_map<std::string, Texture2D> sprites;
     static Sound music;
+    static std::unordered_map<std::string, Sound> sfx;
 
     Game( const size_t width, const size_t height, const std::string& title );
     ~Game();

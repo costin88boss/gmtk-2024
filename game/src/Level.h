@@ -25,7 +25,11 @@ private:
     void DrawObject( Object* obj );
 
     void UpdatePlayer( Player* player );
+    void UpdatePlates();
+    void UpdatePlate( Plate* plate );
 
     bool CheckForWallCollision( int x, int y, size_t size );
+    bool CheckForGate( int x, int y, size_t size );
     bool HandleBoxCollision( int x, int y, int moveX, int moveY, size_t size );
+    bool CheckIfBoxExists( int x, int y, size_t size, Box* exclude );
 };

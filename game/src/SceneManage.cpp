@@ -14,14 +14,18 @@ const Color BG_COLOR = (Color){ 57, 75, 88, 255 };
 
 // Level 1 Variables
 Player lv1_player( 2, 2, 2, 0 );
-Box lv1_box1( 7, 3, 3 );
+Box lv1_box1( 10, 3, 2 );
 Box lv1_box2( 4, 3, 1 );
+Gate lv1_gate( 6, 3, 1);
+Plate lv1_plate( 8, 3, 2, &lv1_gate );
 
 std::vector<Object*> lv1Objects = 
 { 
-    &lv1_player,
+    &lv1_plate,
+    &lv1_gate,
     &lv1_box1,
-    &lv1_box2
+    &lv1_box2,
+    &lv1_player
 };
 
 Level level1( 16, 8, lv1Objects );

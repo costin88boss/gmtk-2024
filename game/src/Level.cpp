@@ -23,6 +23,7 @@ void Level::Update()
             UpdatePlayer( dynamic_cast<Player*>( obj ));
         }
     }
+    UpdatePlates();
 }
 
 void Level::DrawTiles()
@@ -77,8 +78,52 @@ void Level::UpdatePlayer( Player* player )
     int hInput = IsKeyPressed( KEY_D ) - IsKeyPressed( KEY_A );
     int vInput = IsKeyPressed( KEY_W ) - IsKeyPressed( KEY_S );
     if ( !CheckForWallCollision( player->x + hInput, player->y - vInput, player->size ) &&
-         !HandleBoxCollision   ( player->x + hInput, player->y - vInput, hInput, vInput, player->size ))
+         !HandleBoxCollision   ( player->x + hInput, player->y - vInput, hInput, vInput, player->size) &&
+         !CheckForGate( player->x + hInput, player->y - vInput, player->size ))
+    {
         player->Move( hInput, -vInput );
+    }
+}
+
+void Level::UpdatePlates()
+{
+    for ( Object* obj : m_objects )
+    {
+        if ( !dynamic_cast<Plate*>( obj ) ) continue;
+        UpdatePlate( dynamic_cast<Plate*>( obj ) );
+    }
+}
+void Level::UpdatePlate( Plate* plate )
+{
+    std::vector<Vector2> positions;
+
+    positions.push_back((Vector2){plate->x                  , plate->y                  });
+    positions.push_back((Vector2){plate->x + plate->size - 1, plate->y                  });
+    positions.push_back((Vector2){plate->x                  , plate->y + plate->size - 1});
+    positions.push_back((Vector2){plate->x + plate->size - 1, plate->y + plate->size - 1});
+    
+    for ( Object* obj : m_objects )
+    {
+        if ( !dynamic_cast<Box*>( obj ) && !dynamic_cast<Player*>( obj ) ) continue;
+
+        std::vector<Vector2> objPositions;
+
+        objPositions.push_back((Vector2){obj->x                , obj->y                });
+        objPositions.push_back((Vector2){obj->x + obj->size - 1, obj->y                });
+        objPositions.push_back((Vector2){obj->x                , obj->y + obj->size - 1});
+        objPositions.push_back((Vector2){obj->x + obj->size - 1, obj->y + obj->size - 1});
+
+        for ( int i = 0; i < 4; i++)
+        {
+            if ( ( positions[i].x == objPositions[0].x && positions[i].y == objPositions[0].y) ||
+                 ( positions[i].x == objPositions[1].x && positions[i].y == objPositions[1].y) ||
+                 ( positions[i].x == objPositions[2].x && positions[i].y == objPositions[2].y) ||
+                 ( positions[i].x == objPositions[3].x && positions[i].y == objPositions[3].y)   )
+                {
+                    plate->UpdatePlate( obj );
+                }
+        }
+    }
 }
 
 bool Level::CheckForWallCollision( int x, int y, size_t size )
@@ -103,6 +148,41 @@ bool Level::CheckForWallCollision( int x, int y, size_t size )
             break;
     }
     return out;
+}
+
+bool Level::CheckForGate( int x, int y, size_t size )
+{
+    std::vector<Vector2> positions;
+
+    positions.push_back((Vector2){x           , y            });
+    positions.push_back((Vector2){x + size - 1, y            });
+    positions.push_back((Vector2){x           , y + size - 1});
+    positions.push_back((Vector2){x + size - 1, y + size - 1});
+    
+    for ( Object* obj : m_objects )
+    {
+        if ( !dynamic_cast<Gate*>( obj ) ) continue;
+        Gate* gate = dynamic_cast<Gate*>( obj );
+
+        std::vector<Vector2> gatePositions;
+
+        gatePositions.push_back((Vector2){gate->x                 , gate->y                });
+        gatePositions.push_back((Vector2){gate->x + gate->size - 1, gate->y                });
+        gatePositions.push_back((Vector2){gate->x                 , gate->y + gate->size - 1});
+        gatePositions.push_back((Vector2){gate->x + gate->size - 1, gate->y + gate->size - 1});
+
+        for ( int i = 0; i < 4; i++)
+        {
+            if ( ( positions[i].x == gatePositions[0].x && positions[i].y == gatePositions[0].y) ||
+                 ( positions[i].x == gatePositions[1].x && positions[i].y == gatePositions[1].y) ||
+                 ( positions[i].x == gatePositions[2].x && positions[i].y == gatePositions[2].y) ||
+                 ( positions[i].x == gatePositions[3].x && positions[i].y == gatePositions[3].y)   )
+                {
+                    return !gate->isOpen;
+                }
+        }
+    }
+    return false;
 }
 
 bool Level::HandleBoxCollision( int x, int y, int moveX, int moveY, size_t size )
@@ -133,7 +213,9 @@ bool Level::HandleBoxCollision( int x, int y, int moveX, int moveY, size_t size 
                  ( positions[i].x == boxPositions[2].x && positions[i].y == boxPositions[2].y) ||
                  ( positions[i].x == boxPositions[3].x && positions[i].y == boxPositions[3].y)   )
                 {
-                    if ( size >= box->size && !CheckForWallCollision( box->x + moveX, box->y - moveY, box->size ) )
+                    if ( size >= box->size && !CheckForWallCollision( box->x + moveX, box->y - moveY, box->size ) &&
+                         !CheckIfBoxExists( box->x + moveX, box->y - moveY, box->size, box ) && 
+                         !CheckForGate( box->x + moveX, box->y - moveY, box->size ) ) 
                     {
                         box->x += moveX;
                         box->y -= moveY;
@@ -144,5 +226,41 @@ bool Level::HandleBoxCollision( int x, int y, int moveX, int moveY, size_t size 
                 }
         }
     }
+    return false;
+}
+
+bool Level::CheckIfBoxExists( int x, int y, size_t size, Box* exclude )
+{
+    std::vector<Vector2> positions;
+
+    positions.push_back((Vector2){x           , y            });
+    positions.push_back((Vector2){x + size - 1, y            });
+    positions.push_back((Vector2){x           , y + size - 1});
+    positions.push_back((Vector2){x + size - 1, y + size - 1});
+
+    for ( Object* obj : m_objects )
+    {
+        if ( !dynamic_cast<Box*>( obj ) || dynamic_cast<Box*>( obj ) == exclude ) continue;
+        Box* box = dynamic_cast<Box*>( obj );
+
+        std::vector<Vector2> boxPositions;
+
+        boxPositions.push_back((Vector2){box->x                , box->y                });
+        boxPositions.push_back((Vector2){box->x + box->size - 1, box->y                });
+        boxPositions.push_back((Vector2){box->x                , box->y + box->size - 1});
+        boxPositions.push_back((Vector2){box->x + box->size - 1, box->y + box->size - 1});
+
+        for ( int i = 0; i < 4; i++)
+        {
+            if ( ( positions[i].x == boxPositions[0].x && positions[i].y == boxPositions[0].y) ||
+                 ( positions[i].x == boxPositions[1].x && positions[i].y == boxPositions[1].y) ||
+                 ( positions[i].x == boxPositions[2].x && positions[i].y == boxPositions[2].y) ||
+                 ( positions[i].x == boxPositions[3].x && positions[i].y == boxPositions[3].y)   )
+            {
+                return true;
+            }
+        }
+    }
+
     return false;
 }
