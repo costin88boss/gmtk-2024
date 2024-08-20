@@ -52,6 +52,7 @@ public:
     Texture2D GetSprite();
 
     void UpdatePlate( Object* obj );
+    void Reset();
 };
 
 class Wall : public Object

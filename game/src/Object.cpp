@@ -111,6 +111,16 @@ void Plate::UpdatePlate( Object* obj )
     }
 }
 
+void Plate::Reset()
+{
+    if ( activated )
+    {
+        activated = false;
+        PlaySound( Game::sfx[ "Plate" ] );
+    }
+    gate->isOpen = false;
+}
+
 Wall::Wall( int x, int y )
     :
     Object( x, y, 1 )

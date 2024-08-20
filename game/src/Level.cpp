@@ -21,6 +21,7 @@ void Level::Update()
         if ( dynamic_cast<Player*>( obj ) )
         {
             UpdatePlayer( dynamic_cast<Player*>( obj ));
+            DrawText( std::string( "Rescales: " + std::to_string( dynamic_cast<Player*>( obj )->resizes ) ).c_str(), 10, 10, 40, WHITE );
         }
     }
     UpdatePlates();
@@ -93,6 +94,16 @@ void Level::UpdatePlayer( Player* player )
     else
     {
         PlaySound(Game::sfx["Wall"]);
+    }
+    if ( IsKeyDown( KEY_E ) && player->resizes > 0 && player->size < 3 )
+    {
+        player->size++;
+        player->resizes--;
+    }
+    if ( IsKeyDown( KEY_Q ) && player->resizes > 0 && player->size > 1 )
+    {
+        player->size--;
+        player->resizes--;
     }
 }
 
@@ -185,11 +196,13 @@ void Level::UpdatePlate( Plate* plate )
                  ( positions[i].x == objPositions[1].x && positions[i].y == objPositions[1].y) ||
                  ( positions[i].x == objPositions[2].x && positions[i].y == objPositions[2].y) ||
                  ( positions[i].x == objPositions[3].x && positions[i].y == objPositions[3].y)   )
-                {
-                    plate->UpdatePlate( obj );
-                }
+            {
+                plate->UpdatePlate( obj );
+                return;
+            }
         }
     }
+    plate->Reset();
 }
 
 bool Level::CheckForWallCollision( int x, int y, size_t size )
