@@ -1,5 +1,5 @@
 #include "Level.h"
-#include <iostream>
+#include "SceneManage.h"
 
 const size_t SPRITE_SIZE = 48;
 
@@ -24,6 +24,11 @@ void Level::Update()
         }
     }
     UpdatePlates();
+    if ( CheckEnding() )
+    {
+        PlaySound( Game::sfx[ "End" ]);
+        SceneManage::ChangeScene( (Scene) (SceneManage::m_currentScene + 1) );
+    }
 }
 
 void Level::DrawTiles()
@@ -78,10 +83,71 @@ void Level::UpdatePlayer( Player* player )
     int hInput = IsKeyPressed( KEY_D ) - IsKeyPressed( KEY_A );
     int vInput = IsKeyPressed( KEY_W ) - IsKeyPressed( KEY_S );
     if ( !CheckForWallCollision( player->x + hInput, player->y - vInput, player->size ) &&
-         !HandleBoxCollision   ( player->x + hInput, player->y - vInput, hInput, vInput, player->size) &&
-         !CheckForGate( player->x + hInput, player->y - vInput, player->size ))
+         !HandleBoxCollisionC  ( player->x + hInput, player->y - vInput, hInput, vInput, player->size) &&
+         !CheckForGate( player->x + hInput, player->y - vInput, player->size ) &&
+         !CheckForWallObj( player->x + hInput, player->y - vInput, player->size ))
     {
         player->Move( hInput, -vInput );
+        HandleBoxCollision( player->x, player->y, hInput, vInput, player->size);
+    }
+    else
+    {
+        PlaySound(Game::sfx["Wall"]);
+    }
+}
+
+bool Level::CheckForWallObj( int x, int y, size_t size)
+{
+    std::vector<Vector2> positions;
+
+    positions.push_back((Vector2){x           , y           });
+    positions.push_back((Vector2){x + size - 1, y           });
+    positions.push_back((Vector2){x           , y + size - 1});
+    positions.push_back((Vector2){x + size - 1, y + size - 1});
+    
+    for ( Object* obj : m_objects )
+    {
+        if ( !dynamic_cast<Wall*>( obj ) ) continue;
+        Wall* wall = dynamic_cast<Wall*>( obj );
+
+        Vector2 wallV = { wall->x, wall->y };
+
+        for ( int i = 0; i < 4; i++)
+        {
+            if ( ( positions[i].x == wallV.x && positions[i].y == wallV.y )||
+                 ( positions[i].x == wallV.x && positions[i].y == wallV.y )||
+                 ( positions[i].x == wallV.x && positions[i].y == wallV.y )||
+                 ( positions[i].x == wallV.x && positions[i].y == wallV.y )  )
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool Level::CheckEnding()
+{
+    for ( Object* obj : m_objects )
+    {
+        if ( !dynamic_cast<End*>( obj ) ) continue;
+        End* end = dynamic_cast<End*>(obj);
+        
+        for ( Object* obj : m_objects )
+        {
+            if ( !dynamic_cast<Player*>( obj ) ) continue;
+            Player* player = dynamic_cast<Player*>(obj);
+
+            if ( player->x == end->x && player->y == end->y && player->size == end->size )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
 
@@ -215,10 +281,56 @@ bool Level::HandleBoxCollision( int x, int y, int moveX, int moveY, size_t size 
                 {
                     if ( size >= box->size && !CheckForWallCollision( box->x + moveX, box->y - moveY, box->size ) &&
                          !CheckIfBoxExists( box->x + moveX, box->y - moveY, box->size, box ) && 
-                         !CheckForGate( box->x + moveX, box->y - moveY, box->size ) ) 
+                         !CheckForGate( box->x + moveX, box->y - moveY, box->size ) &&
+                         !CheckForWallObj( box->x + moveX, box->y - moveY, box->size )) 
                     {
                         box->x += moveX;
                         box->y -= moveY;
+
+                        return false;
+                    }
+                    return true;
+                }
+        }
+    }
+    return false;
+}
+
+bool Level::HandleBoxCollisionC( int x, int y, int moveX, int moveY, size_t size )
+{
+    std::vector<Vector2> positions;
+
+    positions.push_back((Vector2){x           , y            });
+    positions.push_back((Vector2){x + size - 1, y            });
+    positions.push_back((Vector2){x           , y + size - 1});
+    positions.push_back((Vector2){x + size - 1, y + size - 1});
+    
+    for ( Object* obj : m_objects )
+    {
+        if ( !dynamic_cast<Box*>( obj ) ) continue;
+        Box* box = dynamic_cast<Box*>( obj );
+
+        std::vector<Vector2> boxPositions;
+
+        boxPositions.push_back((Vector2){box->x                , box->y                });
+        boxPositions.push_back((Vector2){box->x + box->size - 1, box->y                });
+        boxPositions.push_back((Vector2){box->x                , box->y + box->size - 1});
+        boxPositions.push_back((Vector2){box->x + box->size - 1, box->y + box->size - 1});
+
+        for ( int i = 0; i < 4; i++)
+        {
+            if ( ( positions[i].x == boxPositions[0].x && positions[i].y == boxPositions[0].y) ||
+                 ( positions[i].x == boxPositions[1].x && positions[i].y == boxPositions[1].y) ||
+                 ( positions[i].x == boxPositions[2].x && positions[i].y == boxPositions[2].y) ||
+                 ( positions[i].x == boxPositions[3].x && positions[i].y == boxPositions[3].y)   )
+                {
+                    if ( size >= box->size && !CheckForWallCollision( box->x + moveX, box->y - moveY, box->size ) &&
+                         !CheckIfBoxExists( box->x + moveX, box->y - moveY, box->size, box ) && 
+                         !CheckForGate( box->x + moveX, box->y - moveY, box->size) &&
+                         !CheckForWallObj( box->x + moveX, box->y - moveY, box->size ) )
+                    {
+                        //box->x += moveX;
+                        //box->y -= moveY;
 
                         return false;
                     }

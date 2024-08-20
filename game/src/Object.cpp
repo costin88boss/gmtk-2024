@@ -77,7 +77,8 @@ Texture2D Gate::GetSprite()
 Plate::Plate( int x, int y, size_t size, Gate* gate )
     :
     Object( x, y, size ),
-    gate( gate )
+    gate( gate ),
+    activated( false )
 {}
 
 Texture2D Plate::GetSprite()
@@ -98,9 +99,42 @@ void Plate::UpdatePlate( Object* obj )
     if ( obj->size >= size )
     {
         gate->isOpen = true;
+        if ( !activated )
+        {
+            activated = true;
+            PlaySound( Game::sfx[ "Plate" ] );
+        }
     }
     else
     {
         gate->isOpen = false;
+    }
+}
+
+Wall::Wall( int x, int y )
+    :
+    Object( x, y, 1 )
+{}
+
+Texture2D Wall::GetSprite()
+{
+    return Game::sprites[ "Wall" ];
+}
+
+End::End( int x, int y, size_t size )
+    :
+    Object( x, y, size )
+{}
+
+Texture2D End::GetSprite()
+{
+    switch (size)
+    {
+        case 1:
+            return Game::sprites["End1"];
+        case 2:
+            return Game::sprites["End2"];
+        case 3:
+            return Game::sprites["End3"];
     }
 }

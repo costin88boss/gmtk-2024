@@ -34,8 +34,14 @@ Game::Game( const size_t width, const size_t height, const std::string& title )
     Game::sprites["Plate1"] = LoadTexture( "resources/sprites/Plate1.png" );
     Game::sprites["Plate2"] = LoadTexture( "resources/sprites/Plate2.png" );
     Game::sprites["Plate3"] = LoadTexture( "resources/sprites/Plate3.png" );
+    Game::sprites["End1"] = LoadTexture( "resources/sprites/End1.png" );
+    Game::sprites["End2"] = LoadTexture( "resources/sprites/End2.png" );
+    Game::sprites["End3"] = LoadTexture( "resources/sprites/End3.png" );
 
     Game::sfx["Move"] = LoadSound( "resources/sfx/move.wav" );
+    Game::sfx["End"] = LoadSound( "resources/sfx/end.wav" );
+    Game::sfx["Plate"] = LoadSound( "resources/sfx/plate.wav" );
+    Game::sfx["Wall"] = LoadSound( "resources/sfx/wall.wav" );
 
     Game::music = LoadSound( "resources/music/Rescale.wav" );
 }

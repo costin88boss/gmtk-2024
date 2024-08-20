@@ -45,10 +45,25 @@ public:
 class Plate : public Object
 {
 public:
+    bool activated;
     Gate* gate;
 
     Plate( int x, int y, size_t size, Gate* gate );
     Texture2D GetSprite();
 
     void UpdatePlate( Object* obj );
+};
+
+class Wall : public Object
+{
+public:
+    Wall( int x, int y );
+    Texture2D GetSprite();
+};
+
+class End : public Object
+{
+public:
+    End( int x, int y, size_t size );
+    Texture2D GetSprite();
 };

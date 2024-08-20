@@ -4,16 +4,18 @@
 #include <raylib.h>
 #include "Button.h"
 
-enum Scene { TITLE_SCREEN, GAMEPLAY };
+enum Scene { TITLE_SCREEN, LEVEL1, LEVEL2, LEVEL3 };
 
 class SceneManage
 {
 public:
     static void ChangeScene( Scene scene );
     static void Update();
-private:
     static Scene m_currentScene;
+private:
 };
 
 void TitleScreen();
-void Gameplay();
+void Level1();
+void Level2();
+void Level3();
