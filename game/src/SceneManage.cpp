@@ -13,16 +13,18 @@ Button playButton( { 480, 240 },
 const Color BG_COLOR = (Color){ 57, 75, 88, 255 };
 
 // Level 1 Variables
-Player lv1_player( 2, 2, 1, 0 );
-Box lv1_box1( 7, 3, 1 );
+Player lv1_player( 2, 2, 2, 0 );
+Box lv1_box1( 7, 3, 3 );
+Box lv1_box2( 4, 3, 1 );
 
-std::vector<Object*> level1Objects = 
+std::vector<Object*> lv1Objects = 
 { 
     &lv1_player,
-    &lv1_box1 
+    &lv1_box1,
+    &lv1_box2
 };
 
-Level level1( 16, 8, level1Objects );
+Level level1( 16, 8, lv1Objects );
 
 void SceneManage::ChangeScene( Scene scene )
 {

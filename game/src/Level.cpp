@@ -107,64 +107,42 @@ bool Level::CheckForWallCollision( int x, int y, size_t size )
 
 bool Level::HandleBoxCollision( int x, int y, int moveX, int moveY, size_t size )
 {
-    bool out = true;
+    std::vector<Vector2> positions;
+
+    positions.push_back((Vector2){x           , y            });
+    positions.push_back((Vector2){x + size - 1, y            });
+    positions.push_back((Vector2){x           , y + size - 1});
+    positions.push_back((Vector2){x + size - 1, y + size - 1});
     
     for ( Object* obj : m_objects )
     {
         if ( !dynamic_cast<Box*>( obj ) ) continue;
         Box* box = dynamic_cast<Box*>( obj );
-        switch ( size )
+
+        std::vector<Vector2> boxPositions;
+
+        boxPositions.push_back((Vector2){box->x                , box->y                });
+        boxPositions.push_back((Vector2){box->x + box->size - 1, box->y                });
+        boxPositions.push_back((Vector2){box->x                , box->y + box->size - 1});
+        boxPositions.push_back((Vector2){box->x + box->size - 1, box->y + box->size - 1});
+
+        for ( int i = 0; i < 4; i++)
         {
-            case 1:
-                if ( box->x == x && box->y == y )
+            if ( ( positions[i].x == boxPositions[0].x && positions[i].y == boxPositions[0].y) ||
+                 ( positions[i].x == boxPositions[1].x && positions[i].y == boxPositions[1].y) ||
+                 ( positions[i].x == boxPositions[2].x && positions[i].y == boxPositions[2].y) ||
+                 ( positions[i].x == boxPositions[3].x && positions[i].y == boxPositions[3].y)   )
                 {
-                    if ( size >= box->size &&
-                        !CheckForWallCollision( box->x + moveX, box->y - moveY, box->size ) )
+                    if ( size >= box->size && !CheckForWallCollision( box->x + moveX, box->y - moveY, box->size ) )
                     {
                         box->x += moveX;
                         box->y -= moveY;
-                        out = false;
+
+                        return false;
                     }
+                    return true;
                 }
-                else
-                {
-                    out = false;
-                }
-                break;
-            case 2:
-                if ( box->x == x     && box->y == y &&
-                     box->x == x + 1 && box->y == y + 1 )
-                {
-                    if ( size >= box->size )
-                    {
-                        box->x += moveX;
-                        box->y -= moveY;
-                        out = false;
-                    }
-                }
-                else
-                {
-                    out = false;
-                }
-                break;
-            case 3:
-                if ( box->x == x     && box->y == y &&
-                     box->x == x + 1 && box->y == y + 1 && 
-                     box->x == x + 2 && box->y == y + 2  )
-                {
-                    if ( size >= box->size )
-                    {
-                        box->x += moveX;
-                        box->y -= moveY;
-                        out = false;
-                    }
-                }
-                else
-                {
-                    out = false;
-                }
-                break;
         }
     }
-    return out;
+    return false;
 }

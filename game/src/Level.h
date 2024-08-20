@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <cmath>
 #include <stddef.h>
 #include "Game.h"
 #include "Tile.h"
